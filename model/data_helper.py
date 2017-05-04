@@ -45,6 +45,7 @@ def padding_sentences(input_sentences, padding_token, padding_sentence_length=No
     sentences = [getTokens(sentence) for sentence in input_sentences]
     max_sentence_length = padding_sentence_length if padding_sentence_length is not None else max(
             [len(sentence) for sentence in sentences])
+    print(max_sentence_length)
     for sentence in sentences:
         if len(sentence) > max_sentence_length:
             sentence = sentence[:max_sentence_length]

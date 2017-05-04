@@ -7,7 +7,6 @@ class TextCNN(object):
     A CNN for text classification
     Uses and embedding layer, followed by a convolutional, max-pooling and softmax layer.
     '''
-
     def __init__(
             self, sequence_length, num_classes,
             embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0):
@@ -59,16 +58,29 @@ class TextCNN(object):
         with tf.name_scope("dropout"):
             self.h_drop = tf.nn.dropout(self.h_pool_flat, self.dropout_keep_prob)
 
+        # Add 3-layer-MLP
+        h1_units=128
+        h2_units=64
+        with tf.name_scope("FC-Lay-1"):
+            W = tf.Variable(tf.truncated_normal(shape=[384,h1_units], stddev=0.1), name="W")
+            b = tf.Variable(tf.constant(0.1, shape=[h1_units]), name="b")
+            self.hidden_1 = tf.nn.relu(tf.nn.xw_plus_b(self.h_drop,W,b,name="fc1"))
+        with tf.name_scope("FC-Lay-2"):
+            W = tf.Variable(tf.truncated_normal(shape=[h1_units,h2_units], stddev=0.1), name="W")
+            b = tf.Variable(tf.constant(0.1, shape=[h2_units]), name="b")
+            self.hidden_2 = tf.nn.relu(tf.nn.xw_plus_b(self.hidden_1,W,b,name="hidden"))
+
         # Final (unnomalized) scores and predictions
         with tf.name_scope("output"):
             W = tf.get_variable(
                     "W",
-                    shape=[num_filters_total, num_classes],
+                    # shape=[num_filters_total, num_classes],
+                    shape=[h2_units,num_classes],
                     initializer=tf.contrib.layers.xavier_initializer())
             b = tf.Variable(tf.constant(0.1, shape=[num_classes], name="b"))
             l2_loss += tf.nn.l2_loss(W)
             l2_loss += tf.nn.l2_loss(b)
-            self.scores = tf.nn.xw_plus_b(self.h_drop, W, b, name="scores")
+            self.scores = tf.nn.xw_plus_b(self.hidden_2, W, b, name="scores")
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
 
         # Calculate Mean cross-entropy loss

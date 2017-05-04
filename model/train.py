@@ -15,7 +15,7 @@ tf.flags.DEFINE_string("data_file" ,"/Users/zcw/Documents/python/DetectMalicious
 tf.flags.DEFINE_integer("num_labels", 2, "Number of labels for data. (default: 2)")
 #
 # # Model hyperparameters
-tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
+tf.flags.DEFINE_integer("embedding_dim", 64, "Dimensionality of character embedding (default: 128)")
 tf.flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-spearated filter sizes (default: '3,4,5')")
 tf.flags.DEFINE_integer("num_filters", 128, "Number of filters per filter size (default: 128)")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
@@ -37,8 +37,8 @@ FLAGS = tf.flags.FLAGS
 FLAGS._parse_flags()
 
 
-# timestamp = str(int(time.time()))
-out_dir = os.path.abspath(os.path.join(os.path.curdir, "runs", "standard"))
+timestamp = str(int(time.time()))
+out_dir = os.path.abspath(os.path.join(os.path.curdir, "runs", timestamp))
 print("Writing to {}\n".format(out_dir))
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
@@ -51,7 +51,10 @@ print("Loading data...")
 if not os.path.exists(os.path.join(out_dir,"data_x.npy")):
       x, y = data_helper.load_data_and_labels(FLAGS.data_file)
       # Get embedding vector
+      x =x[:100000]
+      y =y[:100000]
       sentences, max_document_length = data_helper.padding_sentences(x, '<PADDING>')
+      print(len(sentences))
       if not os.path.exists(os.path.join(out_dir,"trained_word2vec.model")):
           x = np.array(word2vec_helpers.embedding_sentences(sentences, embedding_size = FLAGS.embedding_dim, file_to_save = os.path.join(out_dir, 'trained_word2vec.model')))
       else:
@@ -172,7 +175,8 @@ with tf.Graph().as_default():
                 [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
                 feed_dict)
             time_str = datetime.datetime.now().isoformat()
-            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+            if step % 50 ==0:
+              print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
             if writer:
                 writer.add_summary(summaries, step)
 
