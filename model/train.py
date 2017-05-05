@@ -4,14 +4,12 @@ import tensorflow as tf
 import os ,time, datetime
 import numpy as np
 from sklearn.cross_validation import train_test_split
-from textCNN import *
+from URLCNN import *
 # Parameters
 # =======================================================
 
 # Data loading parameters
 tf.flags.DEFINE_string("data_file" ,"/Users/zcw/Documents/python/DetectMaliciousURL/data/data.csv", "Data source")
-# tf.flags.DEFINE_string("positive_data_file", "./data/ham_100.utf8", "Data source for the positive data.")
-# tf.flags.DEFINE_string("negative_data_file", "./data/spam_100.utf8", "Data source for the negative data.")
 tf.flags.DEFINE_integer("num_labels", 2, "Number of labels for data. (default: 2)")
 #
 # # Model hyperparameters
@@ -95,7 +93,7 @@ with tf.Graph().as_default():
 	log_device_placement = FLAGS.log_device_placement)
     sess = tf.Session(config = session_conf)
     with sess.as_default():
-        cnn = TextCNN(
+        cnn = URLCNN(
 	    sequence_length = x_train.shape[1],
 	    num_classes = y_train.shape[1],
 	    embedding_size = FLAGS.embedding_dim,
@@ -159,7 +157,8 @@ with tf.Graph().as_default():
                 [train_op, global_step, train_summary_op, cnn.loss, cnn.accuracy],
                 feed_dict)
             time_str = datetime.datetime.now().isoformat()
-            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+            if step % 50 ==0:
+               print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
             train_summary_writer.add_summary(summaries, step)
 
         def dev_step(x_batch, y_batch, writer=None):
@@ -175,8 +174,7 @@ with tf.Graph().as_default():
                 [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
                 feed_dict)
             time_str = datetime.datetime.now().isoformat()
-            if step % 50 ==0:
-              print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
             if writer:
                 writer.add_summary(summaries, step)
 

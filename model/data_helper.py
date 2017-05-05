@@ -7,10 +7,11 @@ from keras.utils import np_utils
 def getTokens(input):
     # tokensBySlash = str(input.encode('utf-8')).split('/')
     # print(tokensBySlash)
-    tokensBySlash = str(input).split('/')
-    allTokens = []
-    for i in range(0, len(tokensBySlash)):
-        token = tokensBySlash[i]
+    # tokensBySlash = str(input).split('/')
+        allTokens = []
+    # for i in range(0, len(tokensBySlash)):
+        token = str(input)
+        # token = tokensBySlash[i]
         tokens = []
         token = token.replace('.', '/')
         token = token.replace('=', '/')
@@ -20,8 +21,8 @@ def getTokens(input):
         token = token.replace('@', '/')
         tokens = token.split('/')
         allTokens = allTokens + tokens
-    allTokens = list(set(allTokens))  # remove redundant tokens
-    return allTokens
+        # allTokens = list(set(allTokens))  # remove redundant tokens
+        return allTokens
 
 
 def load_data_and_labels(path):
