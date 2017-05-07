@@ -36,7 +36,6 @@ def embedding_sentences(sentences, embedding_size = 128, window = 5, min_count =
     embeddingDim = w2vModel.vector_size
     # 嵌入维数
     embeddingUnknown = [0 for i in range(embeddingDim)]
-    print(embeddingUnknown)
     for sentence in sentences:
         this_vector = []
         for word in sentence:
@@ -44,7 +43,6 @@ def embedding_sentences(sentences, embedding_size = 128, window = 5, min_count =
                 this_vector.append(w2vModel[word])
             else:
                 this_vector.append(embeddingUnknown)
-
         all_vectors.append(this_vector)
     return all_vectors
 

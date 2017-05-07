@@ -46,13 +46,15 @@ def padding_sentences(input_sentences, padding_token, padding_sentence_length=No
     sentences = [getTokens(sentence) for sentence in input_sentences]
     max_sentence_length = padding_sentence_length if padding_sentence_length is not None else max(
             [len(sentence) for sentence in sentences])
-    print(max_sentence_length)
+    i=0
+    all_vector=[]
     for sentence in sentences:
         if len(sentence) > max_sentence_length:
             sentence = sentence[:max_sentence_length]
         else:
             sentence.extend([padding_token] * (max_sentence_length - len(sentence)))
-    return (sentences, max_sentence_length)
+        all_vector.append(sentence)
+    return (all_vector, max_sentence_length)
 
 
 def saveDict(input_dict, output_file):

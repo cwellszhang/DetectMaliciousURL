@@ -5,6 +5,7 @@ import os ,time, datetime
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from URLCNN import *
+
 # Parameters
 # =======================================================
 
@@ -20,7 +21,7 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (defau
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda (default: 0.0)")
 #
 # # Training paramters
-tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
+tf.flags.DEFINE_integer("batch_size", 32, "Batch Size (default: 64)")
 tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evalue model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps (defult: 100)")
@@ -49,19 +50,20 @@ print("Loading data...")
 if not os.path.exists(os.path.join(out_dir,"data_x.npy")):
       x, y = data_helper.load_data_and_labels(FLAGS.data_file)
       # Get embedding vector
-      x =x[:100000]
-      y =y[:100000]
-      sentences, max_document_length = data_helper.padding_sentences(x, '<PADDING>')
-      print(len(sentences))
+      x =x[:300000]
+      y =y[:300000]
+      sentences, max_document_length = data_helper.padding_sentences(x, '<PADDING>',padding_sentence_length=30)
+      print(len(sentences[0]))
       if not os.path.exists(os.path.join(out_dir,"trained_word2vec.model")):
-          x = np.array(word2vec_helpers.embedding_sentences(sentences, embedding_size = FLAGS.embedding_dim, file_to_save = os.path.join(out_dir, 'trained_word2vec.model')))
+
+          x= np.array(word2vec_helpers.embedding_sentences(sentences, embedding_size = FLAGS.embedding_dim, file_to_save = os.path.join(out_dir, 'trained_word2vec.model')))
       else:
           print('w2v model found...')
           x = np.array(word2vec_helpers.embedding_sentences(sentences, embedding_size = FLAGS.embedding_dim, file_to_save = os.path.join(out_dir, 'trained_word2vec.model'),file_to_load=os.path.join(out_dir, 'trained_word2vec.model')))
       y = np.array(y)
       # np.save(os.path.join(out_dir,"data_x.npy"),x)
       # np.save(os.path.join(out_dir,"data_y.npy"),y)
-      print('data saving...')
+      del sentences
 else:
       print('data found...')
       x= np.load(os.path.join(out_dir,"data_x.npy"))
@@ -76,14 +78,15 @@ if not os.path.exists(os.path.join(out_dir,"training_params.pickle")):
     data_helper.saveDict(params, training_params_file)
 
 # Shuffle data randomly
-np.random.seed(10)
-shuffle_indices = np.random.permutation(np.arange(len(y)))
-x_shuffled = x[shuffle_indices]
-y_shuffled = y[shuffle_indices]
+# np.random.seed(10)
+# shuffle_indices = np.random.permutation(np.arange(len(y)))
+# x_shuffled = x[shuffle_indices]
+# y_shuffled = y[shuffle_indices]
+# del x,y
 
-
-x_train, x_test, y_train, y_test = train_test_split(x_shuffled, y_shuffled, test_size=0.2, random_state=42)  # split into training and testing set 80/20 ratio
-
+# x_train, x_test, y_train, y_test = train_test_split(x_shuffled, y_shuffled, test_size=0.2, random_state=42)  # split into training and testing set 80/20 ratio
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)  # split into training and testing set 80/20 ratio
+del x,y
 print "Training..."
 # Training
 # =======================================================
