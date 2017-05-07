@@ -3,11 +3,17 @@ Using Word2Vec+CNN to detect the Malicious url
 
 
 
+
+
+
+
 Requirements
 ----------------------------------- 
     Python 2.12
     Tensorflow > 0.12
     Numpy
+
+
 
 
 Training
@@ -26,6 +32,8 @@ Training
                 [--noallow_soft_placement]
                 [--log_device_placement [LOG_DEVICE_PLACEMENT]]
                 [--nolog_device_placement]
+
+
 
 
         optional arguments:
@@ -61,6 +69,11 @@ Training
       --log_device_placement [LOG_DEVICE_PLACEMENT]
                         Log placement of ops on devices
       --nolog_device_placement
+
+
+
+
+
 
 
 References
