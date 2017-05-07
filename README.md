@@ -9,9 +9,9 @@ Using Word2Vec+CNN to detect the Malicious url
 
 Requirements
 ----------------------------------- 
-    Python 2.12
-    Tensorflow > 0.12
-    Numpy
+ * Python 2.12
+ * Tensorflow > 0.12
+ * Numpy
 
 
 
