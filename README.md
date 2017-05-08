@@ -1,10 +1,15 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
 [![PyPI](https://img.shields.io/pypi/pyversions/Django.svg)]()
 
-
-Using Word2Vec+CNN to detect the Malicious url
-
-
+Characterstic
+----------------------------------- 
+ * Using Word2Vec+CNN to detect the Malicious URL and it's a really exquisite structure!
+ 
+ * Finially result about 96.2% precision
+ 
+ * High scalability supporting for Distributed System
+ 
+ * Low Denpency on Python Library 
 
 
 
@@ -16,8 +21,7 @@ Requirements
  * Tensorflow  1.1.0
  * Numpy
  * Gensim 2.0.0
- * Pandas 
- * sklearn 0.18.1
+
 
 Training
 ----------------------------------- 
@@ -93,9 +97,9 @@ Distribution
     Let's take 192.168.0.107 as ps server , 10.211.55.13 and 10.211.55.14 as training server.
     Make every machine has a copy of the code.
    
-### Async-parallel mode:
+### Async-parallelism mode:
 
-![image](http://github.com/paradise6/DetectMaliciousURL/raw/master/data/screenshot/async.png)
+![image](https://github.com/paradise6/DetectMaliciousURL/blob/master/data/screenshot/async.png)
 
           On 192.168.0.107:
           python train.py --replicas=True --job_name=ps --task_index=0 --ps_hosts=192.168.0.107:2222\
@@ -109,9 +113,9 @@ Distribution
      
      
      
- ### Sync-parallel mode:
- ![image](http://github.com/paradise6/DetectMaliciousURL/raw/master/data/screenshot/sync.png)
- 
+ ### Sync-parallelism mode:
+ ![image](https://github.com/paradise6/DetectMaliciousURL/blob/master/data/screenshot/sync.png)
+       
           On 192.168.0.107:
           python train.py --replicas=True --is_sync=True --job_name=ps --task_index=0 --ps_hosts=192.168.0.107:2222\
                            --worker_hosts=10.211.55.13:2222,10.211.55.14:2222
