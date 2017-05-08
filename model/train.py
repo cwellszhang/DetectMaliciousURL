@@ -10,7 +10,7 @@ from URLCNN import *
 # =======================================================
 
 # Data loading parameters
-tf.flags.DEFINE_string("data_file" ,"/Users/zcw/Documents/python/DetectMaliciousURL/data/data.csv", "Data source")
+tf.flags.DEFINE_string("data_file" ,"../data/data.csv", "Data source")
 tf.flags.DEFINE_integer("num_labels", 2, "Number of labels for data. (default: 2)")
 #
 # # Model hyperparameters
@@ -50,9 +50,9 @@ print("Loading data...")
 if not os.path.exists(os.path.join(out_dir,"data_x.npy")):
       x, y = data_helper.load_data_and_labels(FLAGS.data_file)
       # Get embedding vector
-      x =x[:300000]
-      y =y[:300000]
-      sentences, max_document_length = data_helper.padding_sentences(x, '<PADDING>',padding_sentence_length=30)
+      x =x[:100000]
+      y =y[:100000]
+      sentences, max_document_length = data_helper.padding_sentences(x, '<PADDING>')
       print(len(sentences[0]))
       if not os.path.exists(os.path.join(out_dir,"trained_word2vec.model")):
 

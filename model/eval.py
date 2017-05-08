@@ -7,17 +7,17 @@ import data_helper
 import word2vec_helpers
 from URLCNN import URLCNN
 import csv
-
 # Parameters
 # ==================================================
 
 # Data Parameters
 tf.flags.DEFINE_string("input_text_file", "../data/data2.csv", "Test text data source to evaluate.")
-tf.flags.DEFINE_string("input_label_file", "", "Label file for test text data source.")
+# tf.flags.DEFINE_string("input_label_file", "", "Label file for test text data source.")
+tf.flags.DEFINE_string("single_url",None,"single url to evaluate")
 
 # Eval Parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
-tf.flags.DEFINE_string("checkpoint_dir", "./runs/1494170343/checkpoints/", "Checkpoint directory from training run")
+tf.flags.DEFINE_string("checkpoint_dir", "./runs/1494174954/checkpoints/", "Checkpoint directory from training run")
 tf.flags.DEFINE_boolean("eval_train", True, "Evaluate on all training data")
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
@@ -57,8 +57,11 @@ params = data_helper.loadDict(training_params_file)
 num_labels = int(params['num_labels'])
 max_document_length = int(params['max_document_length'])
 # Load data
-if FLAGS.eval_train:
+if FLAGS.eval_train and FLAGS.single_url is None:
     x_raw, y_test = data_helper.load_data_and_labels(FLAGS.input_text_file)
+elif FLAGS.single_url is not None:
+    x_raw = [FLAGS.single_url]
+    y_test=None
 else:
     x_raw = ["a masterpiece four years in the making", "everything is off."]
     y_test = [1, 0]
@@ -104,13 +107,22 @@ with graph.as_default():
 
 # Print accuracy if y_test is defined
 if y_test is not None:
-    correct_predictions = float(sum((all_predictions) == y_test))
+    correct_predictions=0
+    # correct_predictions = float(sum((all_predictions == y_test)))
+    for i in range(0,len(all_predictions)):
+       if all_predictions[i]==y_test[i][1]:
+           correct_predictions=correct_predictions+1
+    correct_predictions=float(correct_predictions)
     print("Total number of test examples: {}".format(len(y_test)))
     print("Accuracy: {:g}".format(correct_predictions/float(len(y_test))))
 
-# Save the evaluation to a csv
-predictions_human_readable = np.column_stack((np.array([text.encode('utf-8') for text in x_raw]), all_predictions))
-out_path = os.path.join(FLAGS.checkpoint_dir, "..", "prediction.csv")
-print("Saving evaluation to {0}".format(out_path))
-with open(out_path, 'w') as f:
-    csv.writer(f).writerows(predictions_human_readable)
+if FLAGS.single_url is not None:
+    print sentences
+    print "Result:", all_predictions
+else:
+    # Save the evaluation to a csv
+    predictions_human_readable = np.column_stack((np.array([text for text in x_raw]), all_predictions))
+    out_path = os.path.join(FLAGS.checkpoint_dir, "..", "prediction.csv")
+    print("Saving evaluation to {0}".format(out_path))
+    with open(out_path, 'w') as f:
+        csv.writer(f).writerows(predictions_human_readable)

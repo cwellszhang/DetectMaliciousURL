@@ -19,6 +19,7 @@ def getTokens(input):
         token = token.replace('?', '/')
         token = token.replace('-', '/')
         token = token.replace('@', '/')
+        token = token.replace(':', '/')
         tokens = token.split('/')
         allTokens = allTokens + tokens
         # allTokens = list(set(allTokens))  # remove redundant tokens
@@ -40,7 +41,6 @@ def load_data_and_labels(path):
             y[i]=1
     label = np_utils.to_categorical(y, 2)
     return (x, label)
-
 
 def padding_sentences(input_sentences, padding_token, padding_sentence_length=None):
     sentences = [getTokens(sentence) for sentence in input_sentences]
