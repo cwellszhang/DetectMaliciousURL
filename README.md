@@ -1,6 +1,6 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
 [![PyPI](https://img.shields.io/pypi/pyversions/Django.svg)]()
-[![Jenkins coverage](https://img.shields.io/jenkins/c/https/jenkins.qa.ubuntu.com/view/Utopic/view/All/job/address-book-service-utopic-i386-ci.svg)]()
+
 
 Using Word2Vec+CNN to detect the Malicious url
 
@@ -87,9 +87,40 @@ Training
                         worker task the performs the variable initialization
       --log_dir LOG_DIR     parameter and log info      
       
-      
-      
+Distribution      
+-----------------------------------    
+   
+    Let's take 192.168.0.107 as ps server , 10.211.55.13 and 10.211.55.14 as training server.
+    Make every machine has a copy of the code.
+   
+### Async-parallel mode:
 
+![image](http://github.com/paradise6/DetectMaliciousURL/raw/master/data/screenshot/async.png)
+
+          On 192.168.0.107:
+          python train.py --replicas=True --job_name=ps --task_index=0 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222
+          On 10.211.55.13:
+          python train.py --replicas=True --job_name=worker --task_index=0 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222       
+          On 10.211.55.14:
+          python train.py --replicas=True --job_name=worker --task_index=1 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222                 
+     
+     
+     
+ ### Sync-parallel mode:
+ ![image](http://github.com/paradise6/DetectMaliciousURL/raw/master/data/screenshot/sync.png)
+ 
+          On 192.168.0.107:
+          python train.py --replicas=True --is_sync=True --job_name=ps --task_index=0 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222
+          On 10.211.55.13:
+          python train.py --replicas=True --is_sync=True --job_name=worker --task_index=0 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222       
+          On 10.211.55.14:
+          python train.py --replicas=True --is_sync=True --job_name=worker --task_index=1 --ps_hosts=192.168.0.107:2222\
+                           --worker_hosts=10.211.55.13:2222,10.211.55.14:2222  
 
 Evaluation
 ----------------------------------- 
