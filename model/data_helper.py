@@ -2,7 +2,27 @@ import pandas as pd
 import numpy as np
 import random
 import pickle
-from keras.utils import np_utils
+
+def to_categorical(y, nb_classes=None):
+    """Converts a class vector (integers) to binary class matrix.
+
+    E.g. for use with categorical_crossentropy.
+
+    # Arguments
+        y: class vector to be converted into a matrix
+            (integers from 0 to nb_classes).
+        nb_classes: total number of classes.
+
+    # Returns
+        A binary matrix representation of the input.
+    """
+    y = np.array(y, dtype='int').ravel()
+    if not nb_classes:
+        nb_classes = np.max(y) + 1
+    n = y.shape[0]
+    categorical = np.zeros((n, nb_classes))
+    categorical[np.arange(n), y] = 1
+    return categorical
 
 def getTokens(input):
     # tokensBySlash = str(input.encode('utf-8')).split('/')
@@ -39,7 +59,7 @@ def load_data_and_labels(path):
             y[i]=0
         else:
             y[i]=1
-    label = np_utils.to_categorical(y, 2)
+    label = to_categorical(y, 2)
     return (x, label)
 
 def padding_sentences(input_sentences, padding_token, padding_sentence_length=None):
