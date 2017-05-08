@@ -130,7 +130,7 @@ Evaluation
 ----------------------------------- 
 
      python eval.py --help 
-     usage: eval.py [-h] [--input_text_file INPUT_TEXT_FILE]
+     usage: eval.py [-h] [--input_text_file INPUT_TEXT_FILE][--single_url SINGLE_URL]
                [--input_label_file INPUT_LABEL_FILE] [--batch_size BATCH_SIZE]
                [--checkpoint_dir CHECKPOINT_DIR] [--eval_train [EVAL_TRAIN]]
                [--noeval_train]
@@ -141,7 +141,21 @@ Evaluation
 
 
     python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints}
+  
+### Single URL Detection
+    
+    python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints} --single_url=hottraveljobs.com/forum/docs/info.php
+    
+    Here I use the defualt checkpoint_dir to detection single_url
+    
+    python eval.py --single_url=hottraveljobs.com/forum/docs/info.php
 
+###  Panel Testing
+    
+    python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints} --input_text_file="../data/data2.csv"
+
+
+    
 
 References
 ----------------------------------- 
