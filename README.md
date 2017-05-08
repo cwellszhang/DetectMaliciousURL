@@ -74,9 +74,21 @@ Training
       --nolog_device_placement
 
 
+Evaluation
+----------------------------------- 
+
+     python eval.py --help 
+     usage: eval.py [-h] [--input_text_file INPUT_TEXT_FILE]
+               [--input_label_file INPUT_LABEL_FILE] [--batch_size BATCH_SIZE]
+               [--checkpoint_dir CHECKPOINT_DIR] [--eval_train [EVAL_TRAIN]]
+               [--noeval_train]
+               [--allow_soft_placement [ALLOW_SOFT_PLACEMENT]]
+               [--noallow_soft_placement]
+               [--log_device_placement [LOG_DEVICE_PLACEMENT]]
+               [--nolog_device_placement]
 
 
-
+    python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints}
 
 
 References
