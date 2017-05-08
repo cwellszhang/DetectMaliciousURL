@@ -13,11 +13,11 @@ Using Word2Vec+CNN to detect the Malicious url
 Requirements
 ----------------------------------- 
  * Python 2.12
- * Tensorflow > 0.12
+ * Tensorflow  1.1.0
  * Numpy
-
-
-
+ * Gensim 2.0.0
+ * Pandas 
+ * sklearn 0.18.1
 
 Training
 ----------------------------------- 
@@ -35,9 +35,10 @@ Training
                 [--noallow_soft_placement]
                 [--log_device_placement [LOG_DEVICE_PLACEMENT]]
                 [--nolog_device_placement]
-
-
-
+                [--noreplicas] [--is_sync [IS_SYNC]] [--nois_sync]
+                [--ps_hosts PS_HOSTS] [--worker_hosts WORKER_HOSTS]
+                [--job_name JOB_NAME] [--task_index TASK_INDEX]
+                [--log_dir LOG_DIR]
 
         optional arguments:
       -h, --help            show this help message and exit
@@ -72,6 +73,22 @@ Training
       --log_device_placement [LOG_DEVICE_PLACEMENT]
                         Log placement of ops on devices
       --nolog_device_placement
+      --replicas [REPLICAS]
+                        Use the dirstribution mode
+      --noreplicas
+      --is_sync [IS_SYNC]   Use the async or sync mode
+      --nois_sync
+      --ps_hosts PS_HOSTS   comma-separated lst of hostname:port pairs
+      --worker_hosts WORKER_HOSTS
+                        comma-separated lst of hostname:port pairs
+      --job_name JOB_NAME   job name:worker or ps
+      --task_index TASK_INDEX
+                        Worker task index,should be >=0, task=0 is the master
+                        worker task the performs the variable initialization
+      --log_dir LOG_DIR     parameter and log info      
+      
+      
+      
 
 
 Evaluation

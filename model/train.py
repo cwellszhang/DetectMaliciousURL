@@ -32,11 +32,11 @@ tf.flags.DEFINE_integer("num_checkpoints", 5, "Number of checkpoints to store (d
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
 tf.flags.DEFINE_boolean("log_device_placement", False, "Log placement of ops on devices")
 # # Distribution
-tf.flags.DEFINE_boolean("replicas",True,"Use the dirstribution mode")
+tf.flags.DEFINE_boolean("replicas",False,"Use the dirstribution mode")
 tf.flags.DEFINE_boolean("is_sync",False,"Use the async or sync mode")
 tf.flags.DEFINE_string("ps_hosts","192.168.0.107:2222","comma-separated lst of hostname:port pairs")
 tf.flags.DEFINE_string("worker_hosts","10.211.55.14:2222,10.211.55.13:2222","comma-separated lst of hostname:port pairs")
-tf.flags.DEFINE_string("job_name","ps","job name:worker or ps")
+tf.flags.DEFINE_string("job_name",None,"job name:worker or ps")
 tf.flags.DEFINE_integer("task_index",0,"Worker task index,should be >=0, task=0 is "
                                        "the master worker task the performs the variable initialization")
 tf.flags.DEFINE_string("log_dir","./runs/outputs/summary","parameter and log info")
