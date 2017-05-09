@@ -1,4 +1,3 @@
-[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
 [![PyPI](https://img.shields.io/pypi/pyversions/Django.svg)]()
 
 Characterstic
@@ -17,7 +16,6 @@ Characterstic
 
 Requirements
 ----------------------------------- 
- * Python 2.12
  * Tensorflow  1.1.0
  * Numpy
  * Gensim 2.0.0
