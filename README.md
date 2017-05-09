@@ -186,14 +186,16 @@ And you will get
 
 References
 ----------------------------------- 
-[[1]Convolutional Neural Networks for Sentence Classification](https://arxiv.org/abs/1408.5882)
+[[1] Cnn-Text-Classification-TF](https://github.com/dennybritz/cnn-text-classification-tf)
 
-[[2]Using Word2Vec+ CNN to Detect Malicious URL](http://blog.csdn.net/u011987514/article/details/71189491)
+[[2] Convolutional Neural Networks for Sentence Classification](https://arxiv.org/abs/1408.5882)
 
-[[3]deep_recommend_system](https://github.com/tobegit3hub/deep_recommend_system/tree/master/http_service#implementation)
+[[3] Using Word2Vec+ CNN to Detect Malicious URL](http://blog.csdn.net/u011987514/article/details/71189491)
 
-[[4]using-machine-learning-detect-malicious-urls](http://fsecurify.com/using-machine-learning-detect-malicious-urls/)
+[[4] deep_recommend_system](https://github.com/tobegit3hub/deep_recommend_system/tree/master/http_service#implementation)
 
-[[5]Malware URLs](http://malwareurls.joxeankoret.com)
+[[5] using-machine-learning-detect-malicious-urls](http://fsecurify.com/using-machine-learning-detect-malicious-urls/)
 
-[[6]Malicious URL Detection using Machine Learning](https://arxiv.org/abs/1701.07179)
+[[6] Malware URLs](http://malwareurls.joxeankoret.com)
+
+[[7]Malicious URL Detection using Machine Learning](https://arxiv.org/abs/1701.07179)
