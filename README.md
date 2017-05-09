@@ -9,7 +9,7 @@ Characterstic
  
  * High scalability supporting for Distributed System
  
- * Low Denpency on Python Library 
+ * Supporting for Online Learning  
 
 
 
@@ -146,7 +146,7 @@ Evaluation
     
     python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints} --single_url=hottraveljobs.com/forum/docs/info.php
     
-    Here I use the defualt checkpoint_dir to detection single_url
+Here I use the defualt checkpoint_dir to detection single_url    
     
     python eval.py --single_url=hottraveljobs.com/forum/docs/info.php
 
@@ -155,7 +155,29 @@ Evaluation
     python eval.py --checkpoint_dir ./runs/{TIME_DIR}/checkpoints} --input_text_file="../data/data2.csv"
 
 
+
+
+
+
+HTTP Server API
+----------------------------------
+This is the HTTP service to load TensorFlow model and inference to predict malicious url.
+
+### Usage
+Run HTTP server with [Django] and use HTTP client under /server
+
+     ./manage.py runserver 0.0.0.0:8000
+### Inference to predict url
+Use url as your GET parameter
+     
+     127.0.0.1:8000/detection/predict/?url=appst0re.net/upload.aspx
+And you will get
     
+    Success to predict appst0re.net/upload.aspx, result: bad
+
+
+
+
 
 References
 ----------------------------------- 
